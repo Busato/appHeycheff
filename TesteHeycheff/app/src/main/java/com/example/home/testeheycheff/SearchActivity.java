@@ -91,7 +91,7 @@ import static com.example.home.testeheycheff.JSONParser.classtag;
             }
 
             ListAdapter adapter = new SimpleAdapter(context, characterList,
-                    R.layout.list_item, new String[]{TAG_NAME, TAG_IMAGE}, new int[]{R.id.name, R.id.image});
+                    R.layout.list_item, new String[]{TAG_NAME}, new int[]{R.id.name});
             setListAdapter(adapter);
             lv = getListView();
         }
@@ -102,17 +102,19 @@ import static com.example.home.testeheycheff.JSONParser.classtag;
 
             String jString = parser.makeHTTPCall(url);
 
+            JSONArray characters = null;
+            try {
+                characters = new JSONArray(jString);
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            }
+
+
             Log.e(classtag, "Response from URL: " + jString);
-
-            if (jString != null) {
-                try {
-                    JSONObject jObj = new JSONObject(jString); //our json data starts with the object
-                    JSONArray characters = jObj.getJSONArray("characterList");
-
-
+                try{
                     // Looping through all data
-                    for (int ind = 0; ind < characters.length(); ind++) {
-                        JSONObject character = characters.getJSONObject(ind);
+                    for (int i = 0; i < characters.length(); i++) {
+                        JSONObject character = characters.getJSONObject(i);
 
                         String name = character.getString(TAG_NAME);
                         String species = character.getString(TAG_SPECIES);
@@ -125,9 +127,9 @@ import static com.example.home.testeheycheff.JSONParser.classtag;
                         String hairColour = character.getString(TAG_HAIR_COLOR);
 
                         JSONObject wand= character.getJSONObject(TAG_WAND);
-                        String wood = character.getString(TAG_WAND_WOOD);
-                        String core = character.getString(TAG_WAND_CORE);
-                        String length = character.getString(TAG_WAND_LENGTH);
+                        String wood = wand.getString(TAG_WAND_WOOD);
+                        String core = wand.getString(TAG_WAND_CORE);
+                        String length = wand.getString(TAG_WAND_LENGTH);
 
                         String patronus = character.getString(TAG_PATRONUS);
                         String hogwartsStudent = character.getString(TAG_HOGWARTS_STUDENT);
@@ -165,10 +167,8 @@ import static com.example.home.testeheycheff.JSONParser.classtag;
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            } else {
-                Log.e("ServiceHandler", "Couldn't get any data from url");
-            }
             return null;
         }
     }
-}
+
+ }

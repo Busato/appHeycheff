@@ -33,6 +33,7 @@ public class JSONParser {
         } catch (Exception e) {
             Log.e(classtag, "Exception: " + e.getMessage());
         }
+
         return response; //returning whatever we fetching from the string to the method.
     }
 
