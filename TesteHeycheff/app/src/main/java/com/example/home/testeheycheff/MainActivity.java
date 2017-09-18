@@ -1,10 +1,8 @@
 package com.example.home.testeheycheff;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
 
         final EditText textFind  = (EditText) findViewById(R.id.textWritten);
         Button searchButton = (Button) findViewById(R.id.searchButton);
-        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getBaseContext());
 
 
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -27,24 +24,14 @@ public class MainActivity extends AppCompatActivity {
                 String searchText = textFind.getText().toString();
                 Bundle bundle = new Bundle();
 
-                if(!searchText.isEmpty()){
+                if(searchText.trim().length()>0){
                     Intent it = new Intent(MainActivity.this, SearchActivity.class);
-                    bundle.putString("text", searchText);
+                    bundle.putString("key", searchText);
                     it.putExtras(bundle);
                     startActivity(it);
                 }
-                else{
-                    alertDialogBuilder.setTitle("Careful");
-                    alertDialogBuilder.setMessage("You need do type something!");
-                    alertDialogBuilder.setPositiveButton(" Ok ", new DialogInterface.OnClickListener() {
 
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
                 }
-            }
-
             });
     }
 }
