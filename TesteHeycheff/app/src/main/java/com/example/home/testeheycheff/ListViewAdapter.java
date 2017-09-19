@@ -21,7 +21,7 @@ public class ListViewAdapter extends BaseAdapter {
     private List<CharacterName> characterList = null;
     private ArrayList<CharacterName>  arraylist;
 
-    public ListViewAdapter(Context context,ArrayList<CharacterName> characterList) {
+    public ListViewAdapter(Context context, List<CharacterName> characterList) {
         mContext = context;
         this.characterList = characterList;
         inflater = LayoutInflater.from(mContext);
@@ -35,11 +35,13 @@ public class ListViewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+
         return characterList.size();
     }
 
     @Override
     public CharacterName getItem(int position) {
+
         return characterList.get(position);
     }
 
@@ -53,7 +55,7 @@ public class ListViewAdapter extends BaseAdapter {
         if (view == null) {
             holder = new ViewHolder();
             view = inflater.inflate(R.layout.list_view_items, null);
-            // Locate the TextViews in listview_item.xml
+            // Locate the TextViews in list_view_item.xml
             holder.name = (TextView) view.findViewById(R.id.name);
             view.setTag(holder);
         } else {

@@ -1,10 +1,9 @@
 package com.example.home.testeheycheff;
 
-import android.app.ListActivity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -18,14 +17,13 @@ import java.util.HashMap;
 import static com.example.home.testeheycheff.JSONParser.classtag;
 
 
-public class MainActivity extends ListActivity implements SearchView.OnQueryTextListener {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     private static String url = "http://hp-api.herokuapp.com/api/characters";
 
-    // Hashmap for ListView
     ArrayList<HashMap<String, String>> characterList = new ArrayList<>();
 
-    ArrayList<CharacterName>  characterNames = new ArrayList<>();
+    ArrayList<CharacterName> characterNames = new ArrayList<>();
 
     ListView list;
     ListViewAdapter adapter;
@@ -57,12 +55,10 @@ public class MainActivity extends ListActivity implements SearchView.OnQueryText
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
+        new GetJSONTask().execute(url);
 
         // Locate the ListView in list_view_main.xml
         list = (ListView) findViewById(android.R.id.list);
-
 
         // Pass results to ListViewAdapter Class
         adapter = new ListViewAdapter(this, characterNames);
@@ -70,11 +66,10 @@ public class MainActivity extends ListActivity implements SearchView.OnQueryText
         // Binds the Adapter to the ListView
         list.setAdapter(adapter);
 
-        // Locate the EditText in listview_main.xml
+        // Locate the EditText in list_view_main.xml
         editsearch = (SearchView) findViewById(R.id.search);
         editsearch.setOnQueryTextListener(this);
 
-        new ProgressTask(MainActivity.this).execute();
     }
 
     @Override
@@ -91,114 +86,113 @@ public class MainActivity extends ListActivity implements SearchView.OnQueryText
 
     }
 
+    class GetJSONTask extends AsyncTask<String, Void, JSONObject> {
 
-    private class ProgressTask extends AsyncTask<String, Void, Boolean> {
         private ProgressDialog dialog;
-        private ListActivity activity;
+        JSONArray characters = null;
+        String jString = null;
 
-        public ProgressTask(ListActivity activity) {
-            this.activity = activity;
-            context = activity;
-            dialog = new ProgressDialog(context);
-        }
-
-        private Context context;
-
-
+        @Override
         protected void onPreExecute() {
             this.dialog.setMessage("Progress start");
             this.dialog.show();
         }
 
         @Override
-        protected void onPostExecute(final Boolean success) {
-            if (dialog.isShowing()) {
-                dialog.dismiss();
-            }
+        protected JSONObject doInBackground(String... strings) {
 
-        }
-
-        @Override
-        protected Boolean doInBackground(String... strings) {
             JSONParser parser = new JSONParser(); // object of JSONParser
 
-            String jString = parser.makeHTTPCall(url);
+            jString = parser.makeHTTPCall(url);
 
-            JSONArray characters = null;
+
             try {
-                characters = new JSONArray(jString);
+                if (jString != null) {
+                    characters = new JSONArray(jString);
+                }
             } catch (JSONException e1) {
                 e1.printStackTrace();
             }
 
 
-            Log.e(classtag, "Response from URL: " + jString);
-            try{
-                // Looping through all data
-                for (int i = 0; i < characters.length(); i++) {
-                    JSONObject character = characters.getJSONObject(i);
-
-                    String name = character.getString(TAG_NAME);
-                    String species = character.getString(TAG_SPECIES);
-                    String gender = character.getString(TAG_GENDER);
-                    String house = character.getString(TAG_HOUSE);
-                    String dateOfBirth = character.getString(TAG_DATE_OF_BIRTH);
-                    String yearOfBirth = character.getString(TAG_YEAR_OF_BIRTH);
-                    String ancestry = character.getString(TAG_ANCESTRY);
-                    String eyeColour = character.getString(TAG_EYE_COLOR);
-                    String hairColour = character.getString(TAG_HAIR_COLOR);
-
-                    JSONObject wand= character.getJSONObject(TAG_WAND);
-                    String wood = wand.getString(TAG_WAND_WOOD);
-                    String core = wand.getString(TAG_WAND_CORE);
-                    String length = wand.getString(TAG_WAND_LENGTH);
-
-                    String patronus = character.getString(TAG_PATRONUS);
-                    String hogwartsStudent = character.getString(TAG_HOGWARTS_STUDENT);
-                    String hogwartsStaff = character.getString(TAG_HOGWARTS_STAFF);
-                    String actor = character.getString(TAG_ACTOR);
-                    String alive = character.getString(TAG_ALIVE);
-                    String image = character.getString(TAG_IMAGE);
-
-                    // Temporary HashMap for single data
-                    HashMap<String, String> temp = new HashMap<>();
 
 
-                    // Add names to ArrayList
-                    characterNames.add(new CharacterName(name));
+                Log.e(classtag, "Response from URL: " + jString);
+                try {
+                    // Looping through all data
+                    if (jString != null) {
+                        if (characters != null) {
+                            for (int i = 0; i < characters.length(); i++) {
+                                JSONObject character = characters.getJSONObject(i);
 
-                    // Adding each child node to Hashmap key -> value
-                    temp.put(TAG_NAME, name);
-                    temp.put(TAG_SPECIES, species);
-                    temp.put(TAG_GENDER, gender);
-                    temp.put(TAG_HOUSE, house);
-                    temp.put(TAG_DATE_OF_BIRTH, dateOfBirth);
-                    temp.put(TAG_YEAR_OF_BIRTH, yearOfBirth);
-                    temp.put(TAG_ANCESTRY, ancestry);
-                    temp.put(TAG_EYE_COLOR, eyeColour);
-                    temp.put(TAG_HAIR_COLOR, hairColour);
-                    temp.put(TAG_WAND_WOOD, wood);
-                    temp.put(TAG_WAND_CORE, core);
-                    temp.put(TAG_WAND_LENGTH, length);
-                    temp.put(TAG_PATRONUS, patronus);
-                    temp.put(TAG_HOGWARTS_STUDENT, hogwartsStudent);
-                    temp.put(TAG_HOGWARTS_STAFF, hogwartsStaff);
-                    temp.put(TAG_ACTOR, actor);
-                    temp.put(TAG_ALIVE, alive);
-                    temp.put(TAG_IMAGE, image);
+                                String name = character.getString(TAG_NAME);
+                                String species = character.getString(TAG_SPECIES);
+                                String gender = character.getString(TAG_GENDER);
+                                String house = character.getString(TAG_HOUSE);
+                                String dateOfBirth = character.getString(TAG_DATE_OF_BIRTH);
+                                String yearOfBirth = character.getString(TAG_YEAR_OF_BIRTH);
+                                String ancestry = character.getString(TAG_ANCESTRY);
+                                String eyeColour = character.getString(TAG_EYE_COLOR);
+                                String hairColour = character.getString(TAG_HAIR_COLOR);
 
-                    //Adding user to userList
-                    characterList.add(temp);
+                                JSONObject wand = character.getJSONObject(TAG_WAND);
+                                String wood = wand.getString(TAG_WAND_WOOD);
+                                String core = wand.getString(TAG_WAND_CORE);
+                                String length = wand.getString(TAG_WAND_LENGTH);
+
+                                String patronus = character.getString(TAG_PATRONUS);
+                                String hogwartsStudent = character.getString(TAG_HOGWARTS_STUDENT);
+                                String hogwartsStaff = character.getString(TAG_HOGWARTS_STAFF);
+                                String actor = character.getString(TAG_ACTOR);
+                                String alive = character.getString(TAG_ALIVE);
+                                String image = character.getString(TAG_IMAGE);
+
+                                // Temporary HashMap for single data
+                                HashMap<String, String> temp = new HashMap<>();
+
+
+                                // Add names to ArrayList
+                                characterNames.add(new CharacterName(name));
+
+                                // Adding each child node to Hashmap key -> value
+                                temp.put(TAG_NAME, name);
+                                temp.put(TAG_SPECIES, species);
+                                temp.put(TAG_GENDER, gender);
+                                temp.put(TAG_HOUSE, house);
+                                temp.put(TAG_DATE_OF_BIRTH, dateOfBirth);
+                                temp.put(TAG_YEAR_OF_BIRTH, yearOfBirth);
+                                temp.put(TAG_ANCESTRY, ancestry);
+                                temp.put(TAG_EYE_COLOR, eyeColour);
+                                temp.put(TAG_HAIR_COLOR, hairColour);
+                                temp.put(TAG_WAND_WOOD, wood);
+                                temp.put(TAG_WAND_CORE, core);
+                                temp.put(TAG_WAND_LENGTH, length);
+                                temp.put(TAG_PATRONUS, patronus);
+                                temp.put(TAG_HOGWARTS_STUDENT, hogwartsStudent);
+                                temp.put(TAG_HOGWARTS_STAFF, hogwartsStaff);
+                                temp.put(TAG_ACTOR, actor);
+                                temp.put(TAG_ALIVE, alive);
+                                temp.put(TAG_IMAGE, image);
+
+                                //Adding user to userList
+                                characterList.add(temp);
+                            }
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return null;
+            return null;}
+
         }
 
     }
 
 
-    }
+
+
+
+
+
 
 
