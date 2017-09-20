@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class ListViewAdapter extends BaseAdapter {
 
@@ -27,10 +26,9 @@ public class ListViewAdapter extends BaseAdapter {
     public ListViewAdapter(Context context, List<CharacterName> characterList) {
         mContext = context;
         this.characterList = characterList;
-        this.characterListPerm = this.characterList;
         inflater = LayoutInflater.from(mContext);
         this.characterNames = new ArrayList<>();
-        this.characterNames.addAll(characterList);
+        this.characterListPerm = new ArrayList<>();
     }
 
     public class ViewHolder {
@@ -73,7 +71,13 @@ public class ListViewAdapter extends BaseAdapter {
 
     // Filter Class
     public void filter(String charText) {
-        charText = charText.toLowerCase(Locale.getDefault());
+        charText = charText.toLowerCase();
+        if(characterListPerm.isEmpty()){
+            for(int i =0; characterList.size()>i; i++){
+                characterListPerm.add(characterList.get(i));
+
+            }
+        }
         characterNames.clear();
         characterNames.addAll(characterListPerm);
         characterList.clear();
@@ -81,7 +85,7 @@ public class ListViewAdapter extends BaseAdapter {
             characterList.addAll(characterNames);
         } else {
             for (CharacterName wp : characterNames) {
-                if (wp.getCharacterName().toLowerCase(Locale.getDefault()).contains(charText)) {
+                if (wp.getCharacterName().toLowerCase().contains(charText.toLowerCase())) {
                     characterList.add(wp);
                 }
             }
