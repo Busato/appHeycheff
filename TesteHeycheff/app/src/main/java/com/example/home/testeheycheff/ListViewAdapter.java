@@ -19,14 +19,18 @@ public class ListViewAdapter extends BaseAdapter {
     Context mContext;
     LayoutInflater inflater;
     private List<CharacterName> characterList = null;
-    private ArrayList<CharacterName>  arraylist;
+    private List<CharacterName> characterListPerm = null;
+
+    private List<CharacterName>  characterNames;
+
 
     public ListViewAdapter(Context context, List<CharacterName> characterList) {
         mContext = context;
         this.characterList = characterList;
+        this.characterListPerm = this.characterList;
         inflater = LayoutInflater.from(mContext);
-        this.arraylist = new ArrayList<>();
-        this.arraylist.addAll(characterList);
+        this.characterNames = new ArrayList<>();
+        this.characterNames.addAll(characterList);
     }
 
     public class ViewHolder {
@@ -50,12 +54,13 @@ public class ListViewAdapter extends BaseAdapter {
         return position;
     }
 
+    @Override
     public View getView(final int position, View view, ViewGroup parent) {
         final ViewHolder holder;
         if (view == null) {
             holder = new ViewHolder();
             view = inflater.inflate(R.layout.list_view_items, null);
-            // Locate the TextViews in list_view_item.xml
+            // Locate the TextViews in list_view_items.xml
             holder.name = (TextView) view.findViewById(R.id.name);
             view.setTag(holder);
         } else {
@@ -69,11 +74,13 @@ public class ListViewAdapter extends BaseAdapter {
     // Filter Class
     public void filter(String charText) {
         charText = charText.toLowerCase(Locale.getDefault());
+        characterNames.clear();
+        characterNames.addAll(characterListPerm);
         characterList.clear();
         if (charText.length() == 0) {
-            characterList.addAll(arraylist);
+            characterList.addAll(characterNames);
         } else {
-            for (CharacterName wp : arraylist) {
+            for (CharacterName wp : characterNames) {
                 if (wp.getCharacterName().toLowerCase(Locale.getDefault()).contains(charText)) {
                     characterList.add(wp);
                 }

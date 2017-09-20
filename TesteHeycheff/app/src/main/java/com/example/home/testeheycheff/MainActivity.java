@@ -55,10 +55,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new GetJSONTask().execute(url);
+        new ProgressTask().execute(url);
 
         // Locate the ListView in list_view_main.xml
-        list = (ListView) findViewById(android.R.id.list);
+        list = (ListView) findViewById(R.id.listview);
 
         // Pass results to ListViewAdapter Class
         adapter = new ListViewAdapter(this, characterNames);
@@ -86,20 +86,28 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     }
 
-    class GetJSONTask extends AsyncTask<String, Void, JSONObject> {
+    class ProgressTask extends AsyncTask<String, Void, Boolean> {
 
-        private ProgressDialog dialog;
+        private ProgressDialog dialog = new ProgressDialog(MainActivity.this);
         JSONArray characters = null;
         String jString = null;
 
         @Override
         protected void onPreExecute() {
-            this.dialog.setMessage("Progress start");
+            this.dialog.setMessage("Please wait");
             this.dialog.show();
         }
 
         @Override
-        protected JSONObject doInBackground(String... strings) {
+        protected void onPostExecute(final Boolean success) {
+
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
 
             JSONParser parser = new JSONParser(); // object of JSONParser
 
