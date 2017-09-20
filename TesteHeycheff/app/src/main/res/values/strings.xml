@@ -3,5 +3,6 @@
     <string name="search">Search</string>
     <string name="nome">Nome</string>
     <string name="search_title">Search</string>
+    <string name="blank">%d</string>
     <string name="search_hint">Search</string>
 </resources>

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+            <android.support.constraint.ConstraintLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" android:weightSum="1">
+
+
+                <TextView
+                        android:id="@+id/name_character"
+                        android:text="Name:"
+                        android:layout_width="0dp"
+                        android:layout_height="70dp"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toTopOf="@+id/image_character"
+                        app:layout_constraintRight_toRightOf="@+id/species_character" android:layout_marginTop="20dp"
+                        tools:layout_constraintLeft_creator="1" android:layout_marginBottom="30dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" android:layout_marginLeft="19dp"
+                        app:layout_constraintHorizontal_bias="1.0" app:layout_constraintVertical_bias="0.0"
+                        app:layout_constraintRight_toLeftOf="@+id/image_character" android:layout_marginRight="0dp"/>
+                <ImageView
+                        android:id="@+id/image_character"
+                        android:layout_width="110dp"
+                        android:layout_height="140dp"
+                        android:scaleType="fitXY"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="28dp"
+                        tools:layout_constraintLeft_creator="1"
+                        app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginLeft="254dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginEnd="20dp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"/>
+                <TextView
+                        android:id="@+id/species_character"
+                        android:text="species:"
+                        android:layout_width="0dp"
+                        android:layout_height="41dp"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toTopOf="@+id/gender_character"
+                        app:layout_constraintRight_toRightOf="@+id/gender_character"
+                        tools:layout_constraintLeft_creator="1" android:layout_marginBottom="25dp"
+                        app:layout_constraintLeft_toLeftOf="@+id/gender_character"
+                        app:layout_constraintHorizontal_bias="0.0"/>
+                <TextView
+                        android:id="@+id/gender_character"
+                        android:text="gender:"
+                        android:layout_width="201dp"
+                        android:layout_height="41dp"
+                        android:textSize="20sp"
+                        tools:layout_constraintTop_creator="1" tools:layout_constraintBottom_creator="1"
+                        android:layout_marginStart="20dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/ancestry_character"
+                        android:layout_marginTop="180dp" tools:layout_constraintLeft_creator="1"
+                        android:layout_marginBottom="244dp" app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" android:layout_marginLeft="20dp"/>
+                <TextView
+                        android:id="@+id/house_character"
+                        android:text="house:"
+                        android:layout_width="304dp"
+                        android:layout_height="41dp"
+                        android:textSize="20sp"
+                        tools:layout_constraintTop_creator="1" tools:layout_constraintBottom_creator="1"
+                        android:layout_marginStart="20dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/dateOfBirth_character"
+                        android:layout_marginTop="61dp" tools:layout_constraintLeft_creator="1"
+                        android:layout_marginBottom="61dp" app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/gender_character" android:layout_marginLeft="20dp"/>
+                <TextView
+                        android:id="@+id/dateOfBirth_character"
+                        android:text="dateOfBirth:"
+                        android:layout_width="0dp"
+                        android:layout_height="41dp"
+                        android:textSize="20sp"
+                        tools:layout_constraintRight_creator="1" tools:layout_constraintBottom_creator="1"
+                        app:layout_constraintBottom_toTopOf="@+id/yearOfBirth_character"
+                        app:layout_constraintRight_toRightOf="@+id/yearOfBirth_character"
+                        tools:layout_constraintLeft_creator="1" android:layout_marginBottom="20dp"
+                        app:layout_constraintLeft_toLeftOf="@+id/yearOfBirth_character"/>
+                <TextView
+                        android:id="@+id/yearOfBirth_character"
+                        android:text="yearOfBirth:"
+                        android:layout_width="0dp"
+                        android:layout_height="41dp"
+                        android:textSize="20sp"
+                        tools:layout_constraintRight_creator="1" tools:layout_constraintBottom_creator="1"
+                        app:layout_constraintBottom_toTopOf="@+id/ancestry_character"
+                        app:layout_constraintRight_toRightOf="@+id/ancestry_character"
+                        tools:layout_constraintLeft_creator="1" android:layout_marginBottom="20dp"
+                        app:layout_constraintLeft_toLeftOf="@+id/ancestry_character"/>
+                <TextView
+                        android:id="@+id/ancestry_character"
+                        android:text="ancestry:"
+                        android:layout_width="0dp"
+                        android:layout_height="41dp"
+                        android:textSize="20sp"
+                        tools:layout_constraintRight_creator="1" tools:layout_constraintBottom_creator="1"
+                        app:layout_constraintBottom_toTopOf="@+id/eyeColour_character"
+                        app:layout_constraintRight_toRightOf="@+id/eyeColour_character"
+                        tools:layout_constraintLeft_creator="1" android:layout_marginBottom="20dp"
+                        app:layout_constraintLeft_toLeftOf="@+id/eyeColour_character"/>
+                <TextView
+                        android:id="@+id/eyeColour_character"
+                        android:text="eyeColour:"
+                        android:layout_width="0dp"
+                        android:layout_height="41dp"
+                        android:textSize="20sp"
+                        tools:layout_constraintRight_creator="1" tools:layout_constraintBottom_creator="1"
+                        app:layout_constraintBottom_toTopOf="@+id/hairColour_character"
+                        app:layout_constraintRight_toRightOf="@+id/hairColour_character"
+                        tools:layout_constraintLeft_creator="1" android:layout_marginBottom="20dp"
+                        app:layout_constraintLeft_toLeftOf="@+id/hairColour_character"/>
+                <TextView
+                        android:id="@+id/hairColour_character"
+                        android:text="hairColour:"
+                        android:layout_width="0dp"
+                        android:layout_height="41dp"
+                        android:textSize="20sp"
+                        tools:layout_constraintRight_creator="1" tools:layout_constraintBottom_creator="1"
+                        app:layout_constraintBottom_toTopOf="@+id/wood_character"
+                        app:layout_constraintRight_toRightOf="@+id/wood_character"
+                        tools:layout_constraintLeft_creator="1" android:layout_marginBottom="20dp"
+                        app:layout_constraintLeft_toLeftOf="@+id/wood_character"/>
+                <TextView
+                        android:id="@+id/wood_character"
+                        android:text="wood:"
+                        android:layout_width="0dp"
+                        android:layout_height="41dp"
+                        android:textSize="20sp"
+                        tools:layout_constraintRight_creator="1" tools:layout_constraintBottom_creator="1"
+                        app:layout_constraintBottom_toTopOf="@+id/core_character"
+                        app:layout_constraintRight_toRightOf="@+id/core_character"
+                        tools:layout_constraintLeft_creator="1" android:layout_marginBottom="20dp"
+                        app:layout_constraintLeft_toLeftOf="@+id/core_character"/>
+                <TextView
+                        android:id="@+id/core_character"
+                        android:text="core:"
+                        android:layout_width="0dp"
+                        android:layout_height="41dp"
+                        android:textSize="20sp"
+                        tools:layout_constraintRight_creator="1" tools:layout_constraintBottom_creator="1"
+                        app:layout_constraintBottom_toTopOf="@+id/length_character"
+                        app:layout_constraintRight_toRightOf="@+id/length_character"
+                        tools:layout_constraintLeft_creator="1" android:layout_marginBottom="20dp"
+                        app:layout_constraintLeft_toLeftOf="@+id/length_character"/>
+                <TextView
+                        android:id="@+id/length_character"
+                        android:text="length:"
+                        android:layout_width="0dp"
+                        android:layout_height="41dp"
+                        android:textSize="20sp"
+                        tools:layout_constraintRight_creator="1" tools:layout_constraintBottom_creator="1"
+                        app:layout_constraintBottom_toTopOf="@+id/patronus_character"
+                        app:layout_constraintRight_toRightOf="@+id/patronus_character"
+                        tools:layout_constraintLeft_creator="1" android:layout_marginBottom="20dp"
+                        app:layout_constraintLeft_toLeftOf="@+id/patronus_character"/>
+                <TextView
+                        android:id="@+id/patronus_character"
+                        android:text="patronus:"
+                        android:layout_width="0dp"
+                        android:layout_height="41dp"
+                        android:textSize="20sp"
+                        tools:layout_constraintRight_creator="1" tools:layout_constraintBottom_creator="1"
+                        app:layout_constraintBottom_toTopOf="@+id/hogwartsStudent_character"
+                        app:layout_constraintRight_toRightOf="@+id/hogwartsStudent_character"
+                        tools:layout_constraintLeft_creator="1" android:layout_marginBottom="20dp"
+                        app:layout_constraintLeft_toLeftOf="@+id/hogwartsStudent_character"/>
+                <TextView
+                        android:id="@+id/hogwartsStudent_character"
+                        android:text="hogwartsStudent:"
+                        android:layout_width="0dp"
+                        android:layout_height="41dp"
+                        android:textSize="20sp"
+                        tools:layout_constraintRight_creator="1" tools:layout_constraintBottom_creator="1"
+                        app:layout_constraintBottom_toTopOf="@+id/hogwartsStaff_character"
+                        app:layout_constraintRight_toRightOf="@+id/hogwartsStaff_character"
+                        tools:layout_constraintLeft_creator="1" android:layout_marginBottom="20dp"
+                        app:layout_constraintLeft_toLeftOf="@+id/hogwartsStaff_character"/>
+                <TextView
+                        android:id="@+id/hogwartsStaff_character"
+                        android:text="hogwartsStaff:"
+                        android:layout_width="0dp"
+                        android:layout_height="41dp"
+                        android:textSize="20sp"
+                        tools:layout_constraintRight_creator="1" tools:layout_constraintBottom_creator="1"
+                        app:layout_constraintBottom_toTopOf="@+id/actor_character"
+                        app:layout_constraintRight_toRightOf="@+id/actor_character"
+                        tools:layout_constraintLeft_creator="1" android:layout_marginBottom="20dp"
+                        app:layout_constraintLeft_toLeftOf="@+id/actor_character"/>
+                <TextView
+                        android:id="@+id/actor_character"
+                        android:text="actor:"
+                        android:layout_width="0dp"
+                        android:layout_height="41dp"
+                        android:textSize="20sp"
+                        tools:layout_constraintRight_creator="1" tools:layout_constraintBottom_creator="1"
+                        app:layout_constraintBottom_toTopOf="@+id/alive_character"
+                        app:layout_constraintRight_toRightOf="@+id/alive_character"
+                        tools:layout_constraintLeft_creator="1" android:layout_marginBottom="20dp"
+                        app:layout_constraintLeft_toLeftOf="@+id/alive_character"/>
+                <TextView
+                        android:id="@+id/alive_character"
+                        android:text="alive:"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:textSize="20sp"
+                        tools:layout_constraintRight_creator="1" tools:layout_constraintBottom_creator="1"
+                        android:layout_marginStart="20dp" app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginEnd="20dp" app:layout_constraintRight_toRightOf="parent"
+                        tools:layout_constraintLeft_creator="1" app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_marginLeft="20dp" android:layout_marginRight="20dp"/>
+
+            </android.support.constraint.ConstraintLayout>
+        </ScrollView>

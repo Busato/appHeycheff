@@ -1,12 +1,16 @@
 package com.example.home.testeheycheff;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     private static String url = "http://hp-api.herokuapp.com/api/characters";
 
-    ArrayList<HashMap<String, String>> characterList = new ArrayList<>();
+    HashMap<String, Character> characterList = new HashMap<>();
 
     ArrayList<CharacterName> characterNames = new ArrayList<>();
 
@@ -66,9 +70,34 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         // Binds the Adapter to the ListView
         list.setAdapter(adapter);
 
+
         // Locate the EditText in list_view_main.xml
         editsearch = (SearchView) findViewById(R.id.search);
         editsearch.setOnQueryTextListener(this);
+
+        AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener(){
+
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                // The characters Name
+                String searchText = ((TextView)view.findViewById(R.id.name)).getText().toString();
+                Bundle bundle = new Bundle();
+                Intent it = new Intent(MainActivity.this, CharacterActivity.class);
+                bundle.putString("text", searchText);
+
+                // New hashmap with only the character that we want
+                Character newCharacter = characterList.get(searchText);
+
+                // Send characters.name and object character
+                it.putExtra("char", newCharacter);
+                it.putExtras(bundle);
+                startActivity(it);
+            }
+
+        };
+
+        list.setOnItemClickListener (listener);
 
     }
 
@@ -131,59 +160,40 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                     if (jString != null) {
                         if (characters != null) {
                             for (int i = 0; i < characters.length(); i++) {
-                                JSONObject character = characters.getJSONObject(i);
+                                JSONObject characterJSON = characters.getJSONObject(i);
 
-                                String name = character.getString(TAG_NAME);
-                                String species = character.getString(TAG_SPECIES);
-                                String gender = character.getString(TAG_GENDER);
-                                String house = character.getString(TAG_HOUSE);
-                                String dateOfBirth = character.getString(TAG_DATE_OF_BIRTH);
-                                String yearOfBirth = character.getString(TAG_YEAR_OF_BIRTH);
-                                String ancestry = character.getString(TAG_ANCESTRY);
-                                String eyeColour = character.getString(TAG_EYE_COLOR);
-                                String hairColour = character.getString(TAG_HAIR_COLOR);
+                                Character character = new Character();
+                                String name = characterJSON.getString(TAG_NAME);
+                                character.setName(name);
+                                character.setSpecies(characterJSON.getString(TAG_SPECIES));
+                                character.setGender(characterJSON.getString(TAG_GENDER));
+                                character.setHouse(characterJSON.getString(TAG_HOUSE));
+                                character.setDateOfBirth(characterJSON.getString(TAG_DATE_OF_BIRTH));
+                                character.setYearOfBirth(characterJSON.getString(TAG_YEAR_OF_BIRTH));
+                                character.setAncestry(characterJSON.getString(TAG_ANCESTRY));
+                                character.setEyeColour(characterJSON.getString(TAG_EYE_COLOR));
+                                character.setHairColour(characterJSON.getString(TAG_HAIR_COLOR));
 
-                                JSONObject wand = character.getJSONObject(TAG_WAND);
-                                String wood = wand.getString(TAG_WAND_WOOD);
-                                String core = wand.getString(TAG_WAND_CORE);
-                                String length = wand.getString(TAG_WAND_LENGTH);
+                                JSONObject wand = characterJSON.getJSONObject(TAG_WAND);
+                                character.setWand(new Wand());
+                                character.getWand().setWood(wand.getString(TAG_WAND_WOOD));
+                                character.getWand().setCore(wand.getString(TAG_WAND_CORE));
+                                character.getWand().setLength(wand.getString(TAG_WAND_LENGTH));
 
-                                String patronus = character.getString(TAG_PATRONUS);
-                                String hogwartsStudent = character.getString(TAG_HOGWARTS_STUDENT);
-                                String hogwartsStaff = character.getString(TAG_HOGWARTS_STAFF);
-                                String actor = character.getString(TAG_ACTOR);
-                                String alive = character.getString(TAG_ALIVE);
-                                String image = character.getString(TAG_IMAGE);
-
-                                // Temporary HashMap for single data
-                                HashMap<String, String> temp = new HashMap<>();
+                                character.setPatronus(characterJSON.getString(TAG_PATRONUS));
+                                character.setHogwartsStudent(characterJSON.getString(TAG_HOGWARTS_STUDENT));
+                                character.setHogwartsStaff(characterJSON.getString(TAG_HOGWARTS_STAFF));
+                                character.setActor(characterJSON.getString(TAG_ACTOR));
+                                character.setAlive(characterJSON.getString(TAG_ALIVE));
+                                character.setImage(characterJSON.getString(TAG_IMAGE));
 
 
                                 // Add names to ArrayList
                                 characterNames.add(new CharacterName(name));
 
                                 // Adding each child node to Hashmap key -> value
-                                temp.put(TAG_NAME, name);
-                                temp.put(TAG_SPECIES, species);
-                                temp.put(TAG_GENDER, gender);
-                                temp.put(TAG_HOUSE, house);
-                                temp.put(TAG_DATE_OF_BIRTH, dateOfBirth);
-                                temp.put(TAG_YEAR_OF_BIRTH, yearOfBirth);
-                                temp.put(TAG_ANCESTRY, ancestry);
-                                temp.put(TAG_EYE_COLOR, eyeColour);
-                                temp.put(TAG_HAIR_COLOR, hairColour);
-                                temp.put(TAG_WAND_WOOD, wood);
-                                temp.put(TAG_WAND_CORE, core);
-                                temp.put(TAG_WAND_LENGTH, length);
-                                temp.put(TAG_PATRONUS, patronus);
-                                temp.put(TAG_HOGWARTS_STUDENT, hogwartsStudent);
-                                temp.put(TAG_HOGWARTS_STAFF, hogwartsStaff);
-                                temp.put(TAG_ACTOR, actor);
-                                temp.put(TAG_ALIVE, alive);
-                                temp.put(TAG_IMAGE, image);
+                                characterList.put(name, character);
 
-                                //Adding user to userList
-                                characterList.add(temp);
                             }
                         }
                     }
